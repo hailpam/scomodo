@@ -1,0 +1,46 @@
+<!-- Detailed View -->
+<div class="row">
+	<!-- Column templating -->
+	<div class="col-lg-12">
+		<h2> <i class="fa fa-list-alt"></i> Focus on {{ detailType }} <span class="badge">{{ detailNr }}</span></h2>
+		<!-- Info Box -->
+		<div class="well">
+			{{ detailInfo }}	
+		</div>
+		<!--  -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Detailed Table View <i class="fa fa-info-circle"></i> </h3>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<div ng-show="!showDetails" > <i class="fa fa-exclamation"></i> No details found!</div>
+					<table class="table table-hover tablesorter" ng-show="showDetails">
+						<thead>
+							<tr>
+								<th class="header">Identifier</th>
+								<th class="header">Label</th>
+								<th class="header">Timestamp</th>
+								<th class="header">Description</th>
+								<th class="header">Other</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+							<tr ng-repeat="detail in details">
+								<td>{{ detail.identifier }}</td>
+								<td>{{ detail.label }}</td>
+								<td> <span class="label label-default"> {{ detail.timestamp | date:'medium' }} </span> </td>
+								<td>{{ detail.description }}</td>
+								<td> <span class="label label-info"> {{ detail.other }} </span> </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>	
+			</div>
+			<div class="panel-footer">
+				{{ detailFooter }}
+			</div>
+		</div>
+	</div>
+</div>

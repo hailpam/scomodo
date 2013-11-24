@@ -1,0 +1,234 @@
+
+<!-- Summary -->
+<div class="row">
+	<!-- Entire Panel | 1-->
+	<div class="col-lg-3">
+		<div class="panel panel-info">
+			<!-- header -->
+			<div class="panel-heading">
+				<div class="row">
+					<!-- icon -->
+					<div class="col-xs-6">
+						<i class="fa fa-exchange fa-5x"></i>				
+					</div>
+					<!-- text -->
+					<div class="col-xs-6 text-right">
+						<p class="announcement-heading">{{ devices }}</p>
+						<p class="announcement-text">Connected Device(s)</p>
+					</div>
+				</div>
+			</div>
+			<!--footer -->
+			<a href="#/details/devices" ng-click="updateBreadcrumb('details')">
+				<div class="panel-footer announcement-footer">
+					<div class="row">
+						<div class="col-xs-6">
+							Connected Device(s)
+						</div>
+						<div class="col-xs-6 text-right">
+							<i class="fa fa-arrow-circle-right"></i>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+	
+	<!-- Entire Panel | 2-->
+	<div class="col-lg-3">
+		<div class="panel panel-warning">
+			<!-- header -->
+			<div class="panel-heading">
+				<div class="row">
+					<!-- icon -->
+					<div class="col-xs-6">
+						<i class="fa fa-eye fa-5x"></i>				
+					</div>
+					<!-- text -->
+					<div class="col-xs-6 text-right">
+						<p class="announcement-heading">{{ warnings }}</p>
+						<p class="announcement-text">To be Careful</p>
+					</div>
+				</div>
+			</div>
+			<!--footer -->
+			<a href="#/details/warnings" ng-click="updateBreadcrumb('details')">
+				<div class="panel-footer announcement-footer">
+					<div class="row">
+						<div class="col-xs-6">
+							To be Careful
+						</div>
+						<div class="col-xs-6 text-right">
+							<i class="fa fa-arrow-circle-right"></i>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+	
+	<!-- Entire Panel | 3-->
+	<div class="col-lg-3">
+		<div class="panel panel-danger">
+			<!-- header -->
+			<div class="panel-heading">
+				<div class="row">
+					<!-- icon -->
+					<div class="col-xs-6">
+						<i class="fa fa-exclamation-triangle fa-5x"></i>				
+					</div>
+					<!-- text -->
+					<div class="col-xs-6 text-right">
+						<p class="announcement-heading">{{ errors }}</p>
+						<p class="announcement-text">Issue(s) Detected</p>
+					</div>
+				</div>
+			</div>
+			<!--footer -->
+			<a href="#/details/errors" ng-click="updateBreadcrumb('details')">
+				<div class="panel-footer announcement-footer">
+					<div class="row">
+						<div class="col-xs-6">
+							Issue(s) Detected
+						</div>
+						<div class="col-xs-6 text-right">
+							<i class="fa fa-arrow-circle-right"></i>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+	
+	<!-- Entire Panel | 3-->
+	<div class="col-lg-3">
+		<div class="panel panel-success">
+			<!-- header -->
+			<div class="panel-heading">
+				<div class="row">
+					<!-- icon -->
+					<div class="col-xs-6">
+						<i class="fa fa-comments fa-5x"></i>				
+					</div>
+					<!-- text -->
+					<div class="col-xs-6 text-right">
+						<p class="announcement-heading">{{ operations }}</p>
+						<p class="announcement-text">Successful Operation(S)</p>
+					</div>
+				</div>
+			</div>
+			<!--footer -->
+			<a href="#/details/operations">
+				<div class="panel-footer announcement-footer">
+					<div class="row">
+						<div class="col-xs-6">
+							Successful Operation(S)
+						</div>
+						<div class="col-xs-6 text-right">
+							<i class="fa fa-arrow-circle-right"></i>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+
+<!-- Latency Graph -->
+<div class="row">
+	<!-- Chart Area -->
+	<div class="col-lg-12">
+		<!-- Panel -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"> <i class="fa fa-bar-chart-o"></i> Response Times Chart</h3>
+			</div>
+			<div class="panel-body">
+				<div id="pingLatency" style="position: relative; height: 250px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Events Summary -->
+<div class="row">
+	<!-- 1st Box: traffic sources -->
+	<div class="col-lg-4">
+		<!-- Panel -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"> <i class="fa fa-random"></i> Traffic Source(s)</h3>
+			</div>
+			<div class="panel-body">
+				<div id="trafficSources" style="position: relative;"></div>
+				<div class="text-right">
+					<a href="#/details/sources" ng-click="updateBreadcrumb('details')">
+						View Details <i class="fa fa-arrow-circle-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 2nd Box: recent activities -->
+	<div class="col-lg-4">
+		<!-- Panel -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"> <i class="fa fa-rss-square"></i> Recent Activity(ies)</h3>
+			</div>
+			<div class="panel-body">
+				<div class="list-group" >
+					<a href="#" class="list-group-item" ng-show="!showActivities">
+						<i class="fa fa-exclamation"></i> No activities found!
+					</a>
+					<a href="#" class="list-group-item" ng-repeat="activity in activities" ng-show="showActivities">
+						<span class="badge"> {{ activity.timestamp | date:'mediumTime' }} </span>
+						<i class="fa fa-tag"></i> {{ activity.label }}
+					</a>
+				</div>
+				<div class="text-right">
+					<a href="#/details/activities" ng-click="updateBreadcrumb('details')">
+						View Details <i class="fa fa-arrow-circle-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 3rd Box: transactions -->
+	<div class="col-lg-4">
+		<!-- Panel -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"> <i class="fa fa-terminal"></i> Recent Transaction(s)</h3>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<span ng-show="!showTransactions"><i class="fa fa-exclamation"></i> No activities found!</span>
+					<table class="table table-bordered table-hover table-striped tablesorter" ng-show="showTransactions">
+						<thead>
+							<tr>
+								<th class="header">Id</th>
+								<th class="header">Type</th>
+								<th class="header">Timestamp</th>
+								<th class="header">Outcome</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="transaction in transactions">
+								<td>{{ transaction.identifier }}</td>
+								<td> <span class="label label-info">{{ transaction.label }}</span> </td>
+								<td>{{ transaction.timestamp | date:'HH:mm:ss Z' }}</td>
+								<td> <span class="label label-success">{{ transaction.other }}</span> </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="text-right">
+					<a href="#/details/transactions" ng-click="updateBreadcrumb('details')">
+						View Details <i class="fa fa-arrow-circle-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

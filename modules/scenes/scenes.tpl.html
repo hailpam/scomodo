@@ -1,0 +1,79 @@
+<!-- Info -->
+<div class="row">
+	<div class="col-lg-12">
+		<h2> <i class="fa fa-lightbulb-o"></i> Define your Scenes</h2>
+		<!-- Info Box -->
+		<div class="well">
+			{{ detailInfo }}	
+		</div>
+	</div>
+</div>
+<!-- Detailed View -->
+<div class="row">
+	<!-- Column templating -->
+	<div class="col-lg-8">
+		<!-- Scenes Panel -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Detailed Table View <i class="fa fa-cloud-upload"></i> </h3>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-hover tablesorter">
+						<thead>
+							<tr>
+								<th class="header"></th>
+								<th class="header">Label</th>
+								<th class="header">Description</th>
+								<th class="header">Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="scene in scenes">
+								<td> 
+									<label class="checkbox-inline">
+										<input type="checkbox" value="{{ scene.selected }}" ng-click="toggle(scene.id)"/>
+									</label>
+								</td>
+								<td>
+									<span class="label label-default">{{ scene.scene.label }}</span>
+								</td>
+								<td>{{ scene.scene.description }}</td>
+								<td>
+									<div class="progress progress-striped active" style="margin-bottom: 9px;">
+										<div class="progress-bar progress-bar-info" style="width: {{ scene.status }}%"></div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>	
+			</div>
+			<div class="panel-footer">
+				{{ detailFooter }}
+			</div>
+		</div>
+	</div>
+	<!-- Control Panel -->
+	<div class="col-lg-4">
+		<div class="panel panel-default text-center">
+			<div class="panel-heading">
+				<h3 class="panel-title">Controls <i class="fa fa-code"></i></h3>
+			</div>
+			<div class="panel-body">
+				<button class="btn btn-default" type="submit" style="width: 80px;" tooltip="Create a new Scene" ng-click="create()" > 
+					<i class="fa fa-plus"></i> Create 
+				</button> <hr />
+				<button class="btn btn-default" type="submit" style="width: 80px;" tooltip="Edit selected Scene" ng-click="edit()" > 
+					<i class="fa fa-pencil-square-o"></i> Edit
+				</button>  <hr />
+				<button class="btn btn-default" type="submit" style="width: 80px;" tooltip="Delete selected Scene" ng-click="delete()" > 
+					<i class="fa fa-minus"></i> Delete
+				</button>  <hr />
+				<button class="btn btn-default" type="submit" style="width: 80px;" tooltip="Trigger selected Scene" ng-click="trigger()" >  
+					<i class="fa fa-power-off"></i> Trigger
+				</button>  <hr />
+			</div>
+		</div>
+	</div>
+</div>

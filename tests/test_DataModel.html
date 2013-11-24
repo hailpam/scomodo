@@ -1,0 +1,281 @@
+<html>
+	<head>
+		<script src="../modules/datamodel.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<script language="JavaScript">
+			var debug = false;
+			var testOutcome = true;
+			// POINT --------------------------------------------------------------
+			var point = new Point(1.0, 2.0, 3.0);
+			if(debug)
+				alert("POINT::"+point.toString());
+			var point1 = new Point(null, null, null).fromString(point.toString());
+			if(debug)
+				alert("POINT1::"+point1.toString());
+			if(!(point.toString() == point1.toString())) {
+				alert("Error:POINT::"+point.toString()+"POINT1::"+point1.toString());
+				testOutcome = false;
+			}
+			// GEOLOCATION --------------------------------------------------------
+			var lat = new Point(11.0, 12.0, 0.0);
+			var lng = new Point(21.0, 22.0, 3.0);
+			var geoLoc = new GeoLocation(lat, lng);
+			if(debug)
+				alert("GEO_LOCATION::"+geoLoc.toString());
+			var geoLoc1 = new GeoLocation(null, null).fromString(geoLoc.toString());
+			if(debug)
+				alert("GEO_LOCATION1::"+geoLoc1.toString());
+			if(!(geoLoc.toString() == geoLoc1.toString())) {
+				alert("Error:GEO_LOCATION::"+geoLoc.toString()+"GEO_LOCATION1::"+geoLoc1.toString());
+				testOutcome = false;
+			}
+			// SCENE DEVICE -------------------------------------------------------
+			var sceneDeviceSetup = new SceneDeviceSetup('bravo', 7);
+			if(debug)
+				alert("SCENE_DEVICE::"+sceneDeviceSetup.toString());
+			var sceneDeviceSetup1 = new SceneDeviceSetup('', 0).fromString(sceneDeviceSetup.toString());
+			if(debug)
+				alert("SCENE_DEVICE1::"+sceneDeviceSetup1.toString());
+			if(!(sceneDeviceSetup.toString() == sceneDeviceSetup1.toString())) {
+				alert("Error:SCENE_DEVICE::"+sceneDeviceSetup.toString()+"SCENE_DEVICE1::"+sceneDeviceSetup1.toString());
+				testOutcome = false;
+			}
+			// SCENE ---------------------------------------------------------------
+			var scene = new Scene("aaa", "bbb", "ccc", 1, 2);
+			scene.addSceneSetup(sceneDeviceSetup);
+			scene.addSceneSetup(sceneDeviceSetup1);
+			var listOfScenes = scene.getSceneSettings();
+			if(debug)
+				alert("SCENE_NR::"+listOfScenes.length);
+			if(listOfScenes.length != 2) { 
+				alert("Error:SCENE_NR::"+listOfScenes.length);
+				testOutcome = false;
+			}
+			if(debug)
+				alert("SCENE::"+scene.toString());
+			var scene1 = new Scene("", "", "", 0, 0).fromString(scene.toString());
+			if(debug)
+				alert("SCENE1::"+scene1.toString());
+			if(!(scene.toString() == scene1.toString())) {
+				alert("Error:SCENE::"+scene.toString()+"SCENE1::"+scene1.toString());
+				testOutcome = false;
+			}
+			// SCENES --------------------------------------------------------------
+			var scenes = new Scenes("lll", "zzz", "yyy", "pap");
+			scenes.addScene(scene);
+			scenes.addScene(scene1);
+			listOfScenes = scenes.getListedScenes();
+			if(debug)
+				alert("SCENES_NR::"+listOfScenes.length);
+			if(listOfScenes.length != 2) { 
+				alert("Error:SCENES_NR::"+listOfScenes.length);
+				testOutcome = false;
+			}
+			if(debug)
+				alert("SCENES::"+scenes.toString());
+			var scenes1 = new Scenes("", "", "", "").fromString(scenes.toString());
+			if(debug)
+				alert("SCENES1::"+scenes1.toString());
+			if(!(scenes.toString() == scenes1.toString())) {
+				alert("Error:SCENES::"+scenes.toString()+"SCENES1::"+scenes1.toString());
+				testOutcome = false;
+			}
+			// TEST DEVICE ---------------------------------------------------------
+			var device = new Device("dev1", "blah", DeviceType.ACTUATOR, geoLoc, 70, 50, "hier");
+			if(debug)
+				alert("DEVICE::"+device.toString());
+			var device1 = new Device("","",DeviceType.ACTUATOR,null, 0,0 ,"").fromString(device.toString());
+			if(debug)
+				alert("DEVICE1::"+device1.toString());
+			if(!(device.toString() == device1.toString())) {
+				testOutcome = false;
+				alert("Error: DEVICE::"+device.toString()+"DEVICE1::"+device1.toString());
+			}
+			// TEST ENVIRONMENT ----------------------------------------------------
+			var environment = new Environment("env1", "blahblah", 1, EnvironmentType.ROOF, geoLoc);
+			environment.addDevice(device);
+			environment.addDevice(device1);
+			if(debug)
+				alert("ENVIRONMENT::"+environment.toString());
+			var devices = environment.getDevices();
+			if(devices.length != 2) {
+				testOutcome = false;
+				alert("Error: DEVICE List::"+devices.length);
+			}
+			var environment1 = new Environment("", "", 0, EnvironmentType.ROOF, null).fromString(environment.toString());
+			if(debug)
+				alert("ENVIRONMENT1::"+environment1.toString());
+			if(!(environment.toString() == environment1.toString())) {
+				testOutcome = false;
+				alert("Error: ENVIRONMENT::"+environment.toString()+"ENVIRONMENT1::"+environment1.toString());
+			}
+			// TEST AREA -----------------------------------------------------------
+			var area = new Area("area", "label", "description", AreaType.HOUSE, geoLoc);
+			area.addEnvironment(environment);
+			area.addEnvironment(environment1);
+			var envs = area.getEnvironments();
+			if(envs.length != 2) {
+				testOutcome = false;
+				alert("Error: ENVIRONMENT Nr::"+envs.length);
+			}
+			if(debug)
+				alert("AREA::"+area.toString());
+			var area1 = new Area(null, null, null, null, null).fromString(area.toString());
+			if(debug)
+				alert("AREA1::"+area1.toString());
+			if(!(area.toString() == area1.toString())) {
+				testOutcome = false;
+				alert("Error: AREA::"+area.toString()+"AREA1::"+area1.toString());
+			}
+			// TEST LATENCY --------------------------------------------------------
+			var latency = new Latency(12.4);
+			if(debug)
+				alert("LATENCY::"+latency.toString());
+			if(latency.toString() == "") {
+				testOutcome = false;
+				alert("Error: LATENCY: Empty");	
+			}
+			// TEST ACTIVITY --------------------------------------------------------
+			var activity = new Activity("Feed", "Received a Feed");
+			if(debug)
+				alert("ACTIVITY::"+activity.toString());
+			if(activity.toString() == "") {
+				testOutcome = false;
+				alert("Error: ACTIVITY: Empty");	
+			}
+			// TEST TRANSACTION --------------------------------------------------------
+			var transaction = new Transaction(10, "Failure");
+			if(debug)
+				alert("TRANSACTION::"+transaction.toString());
+			if(transaction.toString() == "") {
+				testOutcome = false;
+				alert("Error: TRANSACTION: Empty");	
+			}
+			// TEST TRAFFIC SOURCE ------------------------------------------------------
+			var trafSource = new TrafficSource("id11", 12.8);
+			if(debug)
+				alert("TRAFFIC_SOURCE::"+trafSource.toString());
+			if(trafSource.toString() == "") {
+				testOutcome = false;
+				alert("Error: TRAFFIC_SOURCE: Empty");	
+			}
+			// TEST SYSTEM STATUS -------------------------------------------------------
+			var sysStatus = new SystemStatus();
+			if(!(sysStatus.getLatencies().length == 0 &&
+				sysStatus.getTrafficSources().length == 0 &&
+				sysStatus.getTransactions().length == 0 &&
+				sysStatus.getActivities().length == 0)) {
+				
+				testOutcome = false;
+				alert("Error: SYSTEM STATUS: not consistent: arrays not empty");
+			}
+			sysStatus.addActivity(activity);
+			sysStatus.addTransaction(transaction);
+			sysStatus.addTrafficSource(trafSource);
+			sysStatus.addLatency(latency);
+			if(!(sysStatus.getLatencies().length == 1 &&
+				sysStatus.getTrafficSources().length == 1 &&
+				sysStatus.getTransactions().length == 1 &&
+				sysStatus.getActivities().length == 1)) {
+				
+				testOutcome = false;
+				alert("Error: SYSTEM STATUS: not consistent: arrays with unexpected sizes");
+			}
+			sysStatus.connected = true;
+			sysStatus.averageLatency = 12.3;
+			sysStatus.latencyMeasurements = 10;
+			if(debug)
+				alert("Stringify::SYS_STATUS::"+sysStatus.toString());
+			if(debug)
+				alert("Unstringify::SYS_STATUS::"+sysStatus.fromString(sysStatus.toString()));
+			// TEST PROGRAM --------------------------------------------------------
+			var program = new Program();
+			program.areaId = "a01";
+			program.identifier = "program01";
+			program.label = "this program";
+			program.description = "this is a simple program";
+			program.startValidity = new Date();
+			program.endValidity = new Date();
+			program.active = true;
+			program.addScene(scene);
+			program.addScene(scene1);
+			if(program.getScenes().length != 2) {
+				testOutcome = false;
+				alert("Error: Nr SCENE: different from 2");
+			}
+			if(debug)
+				alert("PROGRAM::"+program.toString());
+			var program1 = new Program().fromString(program.toString());
+			if(debug)
+				alert("PROGRAM1::"+program1.toString());
+			if(!(program1.toString() === program.toString())) {
+				testOutcome = false;
+				alert("Error: PROGRAMs different:: PROGRAM::"
+						+scene.toString()+" PROGRAM1::"+scene1.toString());
+			}
+			// TEST PROGRAMS -------------------------------------------------------
+			var programs = new Programs();
+			programs.userId = "u01";
+			programs.identifier = "pr01";
+			programs.label = "this is a program";
+			programs.addProgram(program);
+			programs.addProgram(program1);
+			if(programs.getPrograms().length != 2) {
+				testOutcome = false;
+				alert("Error: Nr PROGRAMs: "+programs.getPrograms().length);
+			}
+			if(debug)
+				alert("PROGRAMS::"+programs.toString());
+			var programs1 = new Programs().fromString(programs.toString());
+			if(debug)
+				alert("PROGRAMS1::"+programs1.toString());
+			if(!(programs1.toString() == programs.toString())) {
+				testOutcome = false;
+				alert("Error: PROGRAMs different: PROGRAMS::"+programs.toString()
+					+" PROGRAMS1::"+programs1.toString());
+			}
+			// TEST EVENT ----------------------------------------------------------
+			var event = new Event("e01", "event 01", new Date(), "This is a simple Event", "Outcome: OK");
+			if(debug)
+				alert("EVENT::"+event.toString());
+			var event1 = new Event("", "", null, "","").fromString(event.toString());
+			if(debug)
+				alert("EVENT1::"+event1.toString());
+			if(!(event.toString() == event1.toString())) {
+				testOutcome = false;
+				alert("Error: EVENTs different: EVENT::"+programs.toString()
+					+" EVENT1::"+programs1.toString());
+			}
+			// TEST EVENTs ---------------------------------------------------------
+			var events = new Events();
+			events.addDevicesInfo(event);
+			if(events.nrOfDevicesInfo() != 1) {
+				testOutcome = false;
+				alert("Error: Expected DEVICEs Info 1: "+events.nrOfDevicesInfo());
+			}
+			if(events.retrieveDevicesInfo().length != 1) {
+				testOutcome = false;
+				alert("Error: Retrieved DEVICEs Info #: "+events.nrOfDevicesInfo());
+			}
+			var event2 = new Event("e02", "event 02", new Date(), "This is a simple Event", "Outcome: OK");
+			events.addDevicesInfo(event2);
+			events.deleteDevicesInfo(1);
+			if(events.retrieveDevicesInfo().length != 1 || 
+				events.retrieveDevicesInfo()[0].indentifier === "e01") {
+				testOutcome = false;
+				alert("Error: After Deletion: DEVICEs Info #: "+events.nrOfDevicesInfo());
+			}
+			events.deleteDevicesInfo(1);
+			if(events.retrieveDevicesInfo().length > 0) {
+				testOutcome = false;
+				alert("Error: After Double Deletion: DEVICEs Info #: "+events.nrOfDevicesInfo());
+			}
+			// TEST FINAL OUTCOME --------------------------------------------------
+			if(testOutcome)
+				alert("Test Successful!");
+			else
+				alert("Test Error(s)"); 
+		</script>
+	</body>
+</html>

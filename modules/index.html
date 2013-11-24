@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html ng-app="scomodo" lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="description" content="A starter template to build rich dashboards">
+	    <meta name="author" content="Paolo Maresca <plo.maresca@gmail.com>">
+	    
+	    <title>SCOMODO Dashboard</title>
+	    
+		<!-- Imprting needed JS assets -->
+		<script src="../assets/js/angular.js" type="text/javascript"></script>
+		<script src="../assets/js/ui-bootstrap-custom-0.6.0.js" type="text/javascript"></script>
+		<script src="../assets/js/ui-bootstrap-custom-tpls-0.6.0.js" type="text/javascript"></script>
+		<script src="../assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+		<script src="../assets/js/morris.js" type="text/javascript"></script>
+		<script src="../assets/js/raphael.js" type="text/javascript"></script>
+		<!-- Settings -->
+		<script src="settings.js" type="text/javascript"></script>
+		<!-- Data Model -->
+		<script src="datamodel.js" type="text/javascript"></script>
+		<!-- Angular App -->
+		<script src="app.js" type="text/javascript"></script>
+		<!-- Factories and Services -->
+		<script src="services.js" type="text/javascript"></script>
+		<!-- Controllers -->
+		<script src="home/home-controller.js" type="text/javascript"></script>
+		<script src="details/details-controller.js" type="text/javascript"></script>
+		<script src="cloud/cloud-controller.js" type="text/javascript"></script>
+		<script src="scenes/scenes-controller.js" type="text/javascript"></script>
+		<script src="programs/programs-controller.js" type="text/javascript"></script>
+		<script src="device/device-controller.js" type="text/javascript"></script>
+		<script src="scene/scene-controller.js" type="text/javascript"></script>
+		<!-- Loading CSS -->
+		<link href="../assets/css/bootstrap.css" rel="stylesheet" />
+		<link href="../assets/css/font-awesome.css" rel="stylesheet" />
+		<link href="../assets/css/morris.css" rel="stylesheet" />
+		<link href="../assets/css/dashboard.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="wrapper" ng-controller="MainController">
+			<!-- Navigation Bar -->
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+				<!-- Header -->
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#"> <i class="fa fa-android"></i> SCOMODO</a>
+				</div>
+				<!-- Lateral Navbar -->
+				<div class="collapse navbar-collapse navbar-ex1-collapse" ng-controller="NavController">
+					<!-- Left-side menu -->
+					<ul class="nav navbar-nav side-nav">
+						<li>
+							<p class="status-bar">
+								<i class="fa fa-bolt"></i> Status: <span ng-show="conStatus"><i class="fa fa-link"></i> Connected</span><span ng-hide="conStatus"><i class="fa fa-chain-broken"></i> Disconnected</span>
+							</p>
+						</li>
+						<li class="active" ng-click="updateBreadcrumb('dashboard')"> 
+							<a href="#/home/hailpam">
+								<i class="fa fa-tachometer"></i> Dashboard
+							</a>
+						 </li>
+						<li> 
+							<a href="#/cloud/hailpam" ng-click="updateBreadcrumb('cloud')" tooltip="Interact with your Cloud of Things">
+								<i class="fa fa-cloud"></i> Cloud of Things
+							</a>
+						 </li>
+						 <li> 
+							<a href="#/scenes/hailpam" ng-click="updateBreadcrumb('scenes')" tooltip="Define your Scenes">
+								<i class="fa fa-lightbulb-o"></i> Scenes
+							</a>
+						 </li>
+						 <li> 
+							<a href="#/programs/hailpam" ng-click="updateBreadcrumb('programs')" tooltip="Define your Programs">
+								<i class="fa fa-cogs"></i> Programs
+							</a>
+						 </li>
+						 <li> 
+							<a href="#" tooltip="Define your operative Setup">
+								<i class="fa fa-wrench"></i> Settings
+							</a>
+						 </li>
+					</ul>
+					<!-- Right-side menu -->
+					
+					<ul class="nav navbar-nav navbar-right navbar-user">
+						<!-- Help -->
+						<li>
+							<a href="#">
+								<i class="fa fa-question-circle"></i> Help
+							</a>
+						</li>
+						<!-- Alerts -->
+						<li>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								<i class="fa fa-bell"></i> Alerts
+								<span class="badge">{{ notificationsNr }}</span>
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li class="dropdown-header">{{ notificationsNr }} New Alert(s)</li>
+				                <li class="message-preview">
+				                	<a href="#" ng-repeat="not in notifications" >
+				                		<span class="time">
+				                			<i class="fa fa-clock-o"></i> {{ not.timestamp | date:'shortTime'}}
+				                		</span>
+				                		<span class="message"> 
+				                			<i class="fa fa-bullhorn"></i>
+				                			{{ not.message }}
+				                		</span>
+				                	</a>
+				                </li>
+				                <li class="divider"></li>
+				                <li>
+				                	<a href="#" ng-click="clearNotifications()" tooltip="Clear alert(s)">
+				                		<i class="fa fa-times-circle"></i> 
+				                		Clear
+				                	</a>
+				                </li>
+				            </ul>
+						</li>
+						<!-- Souliss -->
+						<li class="dropdown user-dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								<i class="fa fa-user"></i> Souliss
+								<b class="caret"></b>	
+							</a>
+							<ul class="dropdown-menu">
+				                <li><a href="#" tooltip="Souliss setup">
+				                	<i class="fa fa-cog"></i>
+				                	Settings
+				                	</a>
+				                </li>
+				                <li class="divider"></li>
+				                <li>
+				                	<a href="#" ng-click="connect()" tooltip="Connect to Souliss Network">
+				                		<i class="fa fa-link"></i>
+				                		Connect
+				                	</a>
+				                </li>
+				                <li><a href="#" ng-click="disconnect()" tooltip="Disconnect from Souliss Network">
+				                	<i class="fa fa-chain-broken"></i>
+				                	Disconnect
+				                	</a>
+				                </li>
+				            </ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<div id="page-wrapper" ng-controller="PageController">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1> <a href="http://www.souliss.net/" target="_blank">
+							<img src="../assets/img/souliss.png" alt="Souliss Project" height="52" width="300"/></a>  
+							<small> <i class="fa fa-home fa-2x"></i>  {{ dateTime | date:'medium' }}</small>
+						</h1>
+						<ol class="breadcrumb">
+							<!-- <span ng-bind-html-unsafe="navPath" class="breadcrumb"></span> -->
+							<li ng-repeat="path in navPath" class="{{ path.class }}"><i class="{{ path.icon }}"></i> {{ path.name }}</li>
+						</ol>
+						<div>
+						  <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+						</div>
+					</div>
+				</div>
+				<!-- Views -->
+				<hr />
+				<div ng-view ></div>
+				<!-- Footer -->
+				<hr />
+				<footer>
+					<i class="fa fa-android"></i> <b>S</b>ouliss <b>CO</b>ntrol and <b>MO</b>nitoring <b>D</b>ashb<b>O</b>ard - <a href="http://www.souliss.net/" target="_blank"> © Souliss Project {{ today | date:'y' }} </a>
+				</footer>
+			</div>
+		</div>
+	</body>
+</html>
+

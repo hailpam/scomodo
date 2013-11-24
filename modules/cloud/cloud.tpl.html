@@ -1,0 +1,62 @@
+<!-- Detailed View -->
+<div class="row">
+	<!-- Column templating -->
+	<div class="col-lg-12">
+		<h2> <i class="fa fa-cloud"></i> Iteract with your Cloud of Things <span class="badge ng-binding"> {{ devices }} Devices </span></h2>
+		<!-- Info Box -->
+		<div class="well">
+			{{ detailInfo }}	
+		</div>
+		<!-- Cloud Panel: Area  -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Detailed View of your Cloud of Things for the Area: '<b>{{ areaLabel }}</b>'  <i class="fa fa-laptop"></i> </h3>
+			</div>
+			<div class="panel-body">
+				<div class="well">
+					<!-- Each for every Environment -->
+					<div ng-repeat="env in environments">
+						<p> 
+							<i ng-show="!env.shown" class="fa fa-chevron-right" ng-click="toggle(env.name)" style="cursor: pointer;"></i>
+							<i ng-show="env.shown" class="fa fa-chevron-down" ng-click="toggle(env.name)" style="cursor: pointer;"></i> Environment '<b> {{ env.name }} </b>' <span ng:class="{true:'label label-success', false:'label label-warning'}[env.size > 0]"> {{ env.size }} Associated</span> 
+							<hr /> 
+							<div style="margin-left: 20px;">
+								<p ng-show="env.shown && env.size == 0"> <i class="fa fa-exclamation-triangle"></i> No Devices associated to this Environment! </p>
+								<table class="table table-hover tablesorter" ng-show="env.shown && env.size > 0">
+									<thead>
+										<tr>
+											<th class="header">Identifier</th>
+											<th class="header">Type</th>
+											<th class="header">Label</th>
+											<th class="header">Status</th>
+											<th class="header">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="dev in env.devices">
+											<td> {{ dev.id }}  </td>
+											<td> <span class="label label-default"> {{ dev.type }}  </span> </td>
+											<td> <span class="label label-info"> {{ dev.label }} </span> </td>
+											<td>
+												<div class="progress active" tooltip="Here the status of '{{ dev.id }}': {{ dev.status }}%">
+													<div class="progress-bar" style="width: {{ dev.status }}%"></div>
+												</div> 
+											</td>
+											<td> 
+												<span class="label label-default">
+													<a href="#/device/{{ dev.id }}&{{ env.id }}" tooltip="Get access to '{{ dev.id }}'" style="color: white; font-family: bold;" > <i class="fa fa-terminal"></i> </a>
+												</span>  
+											</td>
+										</tr>
+									</tbody>
+								</table> 
+							</div> 
+						</p>
+					</div>
+				</div>
+			<div class="panel-footer">
+				{{ detailFooter }}
+			</div>
+		</div>
+	</div>
+</div>

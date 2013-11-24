@@ -1,0 +1,102 @@
+<!-- Info -->
+<div class="row">
+	<div class="col-lg-12">
+		<h2> <i class="fa fa-pencil"></i> Define your Scene</h2>
+		<!-- Info Box -->
+		<div class="well">
+			{{ detailInfo }}	
+		</div>
+	</div>
+</div>
+<!-- Detailed View -->
+<div class="row">
+	<!-- Column templating -->
+	<div class="col-lg-12">
+		<!-- Scenes Panel -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Building your custom Scene <i class="fa fa-sitemap"></i> </h3>
+			</div>
+			<div class="panel-body">
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label>Label</label>
+						<input class="form-control" placeholder="Enter the Label" ng-model="sceneLabel" />
+					</div>
+					<div class="form-group">
+						<label>Description</label>
+						<textarea class="form-control" rows="3" ng-model="sceneDescr" ></textarea>
+					</div>
+					<div class="form-group" ng-show="selectedEnv.length > 0">
+						<label>Environment</label>
+						<input class="form-control" type="text" disabled="" value="{{ envLabel }}">
+					</div>
+					<div class="row" ng-repeat="dev in selectedDev">
+						<div class="col-lg-4">
+							<label>Device</label>
+							<input class="form-control" type="text" disabled="" value="{{ dev.id }}">
+						</div>
+						<div class="col-lg-4">
+							<label>State</label>
+							<input class="form-control" type="text" disabled="" value="{{ dev.status }}">
+						</div>
+						<div class="col-lg-4">
+							<label>Action</label>
+							<button class="btn btn-default" type="submit" ng-click="removeDevSetup(dev)" tooltip="Remove this setup from your custom Scene"> <i class="fa fa-minus-square"></i> Del</button>
+						</div>
+					</div>
+					<div class="row" ng-show="selectedDev.length > 0">
+						<div class="col-lg-12 text-center">
+							<br />
+							<p>
+								<button class="btn btn-default btn-lg btn-block" type="button" ng-click="saveScene()" > <i class="fa fa-floppy-o"></i> Save this Scene</button>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label>Area of Interest</label>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" value="" ng-click="toggleArea()"/>
+								{{ areaLabel }}
+							</label>
+						</div>
+					</div>
+					<div class="form-group" ng-show="isAreaSelected">
+						<label>Environments in '<b>{{ areaLabel }}</b>' Area</label>
+						<div class="radio" ng-repeat="env in envLabels">
+							<label>
+								<input id="optionsRadios{{ env.id }}" type="radio" checked="" value="option1" name="optionsRadios" ng-click="selectEnvironment(env)"> {{ env.label }} 
+							</label>
+						</div>
+					</div>
+					<div class="form-group" ng-show="isAreaSelected">
+						<label>Devices in '<b>{{ envLabel }}</b>' Environment</label>
+						<select class="form-control">
+							<option ng-repeat="dev in devLabels" ng-click="selectDevice(dev)">{{ dev.label }}</option>
+						</select>
+					</div>
+					<div class="form-group" ng-show="devLabel != ''">
+						<div class="col-lg-4">
+							<label>Device</label>
+							<input class="form-control" type="text" disabled="" value="{{ devLabel }}">
+						</div>
+						<div class="col-lg-4">
+							<label>Status</label>
+							<input class="form-control" type="text" ng-model="devStatus">
+						</div>
+						<div class="col-lg-4">
+							<label>Action</label>
+							<button class="btn btn-default" type="submit" ng-click="addDevSetup(devLabel,devStatus)" tooltip="Add this setup to your custom Scene"> <i class="fa fa-plus-square"></i> Add</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				{{ detailFooter }}
+			</div>
+		</div>
+	</div>
+</div>

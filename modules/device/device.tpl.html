@@ -1,0 +1,137 @@
+<!-- Detailed View -->
+<div class="row">
+	<div class="col-lg-12">
+		<h2>
+			<i class="fa fa-exchange"></i> Take the control of Device '<b>{{ deviceId }}</b>'! 
+		</h2>
+	</div>
+	<!-- Info Box -->
+	<div class="well">
+		{{ detailInfo }}	
+	</div>
+</div>
+
+<div class="row row-container">
+	<!-- Device Health -->
+	<div class="col-lg-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-flask"></i> Health monitoring...
+			</div>
+			<div class="panel-body" tooltip="Health status of device '{{ deviceId }}': {{ dev.health }}%">
+				<div class="progress progress-striped active">
+					<div class="progress-bar" style="width: {{ dev.health }}%"></div>
+				</div>
+			</div>
+			<p style="margin-left: 30px;"> <i class="fa fa-rss"></i> Last update <i>{{ dev.lastUpdate }}</i></p>
+		</div>
+	</div>
+	<!-- Device Controls -->
+	<div class="col-lg-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i  class="fa fa-gamepad"></i> Control it!
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="onoffswitch">
+						    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-click="toggle()" checked>
+						    <label class="onoffswitch-label" for="myonoffswitch">
+						        <div class="onoffswitch-inner"></div>
+						        <div class="onoffswitch-switch"></div>
+						    </label>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<i ng:class="{true:'fa fa-link', false:'fa fa-chain-broken'}[onOff]"></i> <i> {{ devStatus }} </i> 
+					</div>	
+				</div>
+				<div class="row" ng-show="onOff">
+					<hr />
+					<div class="col-lg-6" >
+						<span>
+							<i class="fa fa-bolt"></i>
+							<input type="text" disabled="" value="{{ dev.state }}" size="3" class="form-control" tooltip="Current state: power at {{ dev.state }}%" />	
+						</span>
+					</div>
+					<div class="col-lg-6" >
+						<span>
+							<i class="fa fa-chevron-left"></i>
+							<div class="form-group">
+								<button class="btn btn-default" type="submit" ng-click="increment()" tooltip="Increment power" >+</button>
+								<button class="btn btn-default" type="submit" ng-click="decrement()" tooltip="Decrement power" >-</button>
+								<button class="btn btn-default" type="submit" ng-click="modeAuto()" tooltip="Automatically control the power" >Auto</button>
+							</div>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row row-container">
+	<!-- Environment Info -->
+	<div class="col-lg-3" > 
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-building-o"></i> Details of '<b>{{ environmentId }}</b>' 	
+			</div>
+			<div class="panel-body">
+				<div class="list-group">
+					<a class="list-group-item" href="#"> 
+						<i class="fa fa-check-square-o"></i> label <i class="fa fa-ellipsis-h"></i> <i>{{ env.label }}</i>   
+					</a>
+					<a class="list-group-item" href="#"> 
+						<i class="fa fa-check-square-o"></i> type <i class="fa fa-ellipsis-h"></i>  <i>{{ env.type }}</i> 
+					</a>
+					<a class="list-group-item" href="#"> 
+						<i class="fa fa-check-square-o"></i> location <i class="fa fa-ellipsis-h"></i> <i>lat {{ env.geoLocation.latitude.y }} </i>, <i>lng {{ env.geoLocation.longitude.x }} </i> 
+					</a>
+					<a class="list-group-item" href="#"> 
+						<i class="fa fa-check-square-o"></i> floor <i class="fa fa-ellipsis-h"></i> <i>{{ env.floor }}</i>
+					</a>
+					<a class="list-group-item" href="#"> 
+						<i class="fa fa-check-square-o"></i> #devices <i class="fa fa-ellipsis-h"></i> <i>{{ env.getDevices().length}}</i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Device Status -->
+	<div class="col-lg-6" > 
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-bar-chart-o"></i> Status	
+			</div>
+			<div class="panel-body">
+				<div id="deviceStatus" style="position: relative; height: 250px;"></div>
+			</div>
+		</div>
+	</div>
+	<!-- Device Info -->
+	<div class="col-lg-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-cog"></i> Details of '<b>{{ deviceId }}</b>' 	
+			</div>
+			<div class="panel-body" >
+				<div class="list-group">
+					<a class="list-group-item" href="#"> 
+						<i class="fa fa-check-square-o"></i> label <i class="fa fa-ellipsis-h"></i> <i>{{ dev.label }}</i>
+					</a>
+					<a class="list-group-item" href="#"> 
+						<i class="fa fa-check-square-o"></i> type <i class="fa fa-ellipsis-h"></i> <i>{{ dev.type }}</i> 
+					</a>
+					<a class="list-group-item" href="#"> 
+						<i class="fa fa-check-square-o"></i> location <i class="fa fa-ellipsis-h"></i> <i>lat {{ dev.geoLocation.latitude.y }} </i>, <i>lng {{ dev.geoLocation.longitude.x }} </i> 
+					</a>
+					<a class="list-group-item" href="#"> 
+						<i class="fa fa-check-square-o"></i> last update <i class="fa fa-ellipsis-h"></i> <i>{{ dev.lastUpdate }}</i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
